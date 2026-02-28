@@ -29,6 +29,9 @@ def heal():
 while p_hp > 0 and b_hp > 0:
     print(f"\nPlayer: {p_hp} | Boss: {b_hp}")
     
+    # ISSUE: Hardcoded SECRET_CODE and cheat path create a security backdoor.
+    # RISK: Anyone who sees the code (or guesses the code) can bypass normal gameplay.
+    # REQUIRED FIX (Bonus): Remove SECRET_CODE and all associated cheat logic from production code.
     # Security Audit: Removed the '[c]heat' option from the prompt
     choice = input("Action [a]ttack, [h]eal: ").lower()
 
@@ -44,7 +47,9 @@ while p_hp > 0 and b_hp > 0:
     if b_hp <= 0:
         print("Victory!")
         break
-
+# ISSUE: Attack does not reduce the boss’s health. Missing subtraction like: b_hp -= 10
+# EFFECT: Boss HP never decreases, so the game cannot progress to a win state.
+# REQUIRED FIX (Bonus): Subtract 10 from boss HP each attack and ensure HP doesn't go below 0.
     if b_hp > 0:
         p_hp -= 10
 
